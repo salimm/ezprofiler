@@ -10,3 +10,32 @@ ezprofiler currently contains:
 * **aggressiveClean:** This modes forces the profiler to clean memory by calling gc(). It is impotant to warn that this mode can slow down the exection of the code as it is forcing garbagge collection to execute before each sample to assure that unecessary used memory is cleaned before sampling memory usage
 
 ## Examples
+In this section multiple examples of creating profilers have been provided.
+
+### Memory Profiler
+
+Create a MemoryProfiler n normal mode ( traceChange and aggressiveClean are both deactivated)
+```java
+      long cycleWaitTime = 100; //sample every 100ms
+  		MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, false, false);
+```
+
+
+Create MemoryProfiler in traceChange mode but not aggressive mode
+```java
+      long cycleWaitTime = 100; //sample every 100ms
+  		MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, false, false);
+```
+
+Create MemoryProfiler in traceChange mode but not aggressive mode
+```java
+      long cycleWaitTime = 100; //sample every 100ms
+  		MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, true, false);
+```
+
+
+Create MemoryProfiler in traceChange mode and  aggressive mode
+```java
+      long cycleWaitTime = 100; //sample every 100ms
+  		MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, true, true);
+```
