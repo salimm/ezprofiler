@@ -14,17 +14,17 @@ In this section multiple examples of creating profilers have been provided.
 
 ### Memory Profiler
 
-Create a MemoryProfiler n normal mode ( traceChange and aggressiveClean are both deactivated)
+Create a MemoryProfiler in normal mode ( traceChange and aggressiveClean are both deactivated)
 ```java
-      long cycleWaitTime = 100; //sample every 100ms
-  		MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, false, false);
+    long cycleWaitTime = 100; //sample every 100ms
+    MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, false, false);
 ```
 
 
 Create MemoryProfiler in traceChange mode but not aggressive mode
 ```java
-      long cycleWaitTime = 100; //sample every 100ms
-  		MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, false, false);
+    long cycleWaitTime = 100; //sample every 100ms
+    MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, false, false);
 ```
 
 Create MemoryProfiler in traceChange mode but not aggressive mode
@@ -36,8 +36,8 @@ Create MemoryProfiler in traceChange mode but not aggressive mode
 
 Create MemoryProfiler in traceChange mode and  aggressive mode
 ```java
-      long cycleWaitTime = 100; //sample every 100ms
-  		MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, true, true);
+    long cycleWaitTime = 100; //sample every 100ms
+    MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, true, true);
 ```
 
 
@@ -56,4 +56,13 @@ Trace the memory of a block of code
     
 ```
 
-The memory usage can also be retrieved while MemoryProfiler has not been stopped. This mean the profiler will continue sampling memory but yet return the current existing samples
+Note: The memory usage can also be retrieved while MemoryProfiler has not been stopped. This mean the profiler will continue sampling memory but yet return the current existing samples.
+
+
+Additonal calculated memory usage informations that can be obtained contains:
+* Maximum: maxMemoryUsage()
+* Minimum: minMemoryUsage()
+* Average: avgMemoryUsage()
+* Median: medianMemoryUsage()
+* Variance: varianceMemoryUsage()
+
