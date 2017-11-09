@@ -39,3 +39,21 @@ Create MemoryProfiler in traceChange mode and  aggressive mode
       long cycleWaitTime = 100; //sample every 100ms
   		MemoryProfiler mem = new MemoryProfiler(cycleWaitTime, true, true);
 ```
+
+
+Trace the memory of a block of code
+```java
+    mem.start(); //starts profiling immediately
+    ...
+    ...
+    .your block of code
+    ...
+    ...
+    mem.stop();
+    
+    List<Long> usage = mem.getgetMemoryUsages(); // memory usage in bytes at every sample
+    List<Long> times = mem.getgetMemoryUsages(); // time in system milliseconds of each sample
+    
+```
+
+The memory usage can also be retrieved while MemoryProfiler has not been stopped. This mean the profiler will continue sampling memory but yet return the current existing samples
