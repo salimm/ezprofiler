@@ -57,26 +57,27 @@ public class MemoryProfilerWorker implements Runnable {
 			this.memoryUsageAtStart = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		else
 			this.memoryUsageAtStart = 0;
+		sample();
 	}
 
 	public void run() {
 		while (!isStopped()) {
-			if (aggressiveClean)
-				System.gc();
-			sample();
-			if (isStopped()) {
-				return;
-			}
 			try {
 				Thread.sleep(waitTime);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
+			}
+			sample();
+			if (isStopped()) {
+				return;
 			}
 
 		}
 	}
 
 	private void sample() {
+		if (aggressiveClean)
+			System.gc();
 		// add current time
 		getTimes().add(System.currentTimeMillis());
 		// get running memory
