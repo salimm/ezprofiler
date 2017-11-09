@@ -2,6 +2,7 @@ package me.salimm.ez.profiler.core.profilers;
 
 import java.util.List;
 
+
 import me.salimm.ez.profiler.core.errors.ProfilerNotStartedException;
 
 /**
@@ -20,10 +21,23 @@ public class MemoryProfiler {
 	 * wait time between samples
 	 */
 	private long waitTime;
-	
 
-	public MemoryProfiler(long waitTime) {
+	/**
+	 * indicates if the profiler should trace changes from the initial usage or
+	 * the total memory usage
+	 */
+	private boolean traceChange;
+
+	/**
+	 * sets if the the profiler should try to force System.gc() execution before
+	 * every sample of memory usage or not
+	 */
+	private boolean aggressiveClean;
+
+	public MemoryProfiler(long waitTime, boolean traceChange, boolean aggressiveClean) {
 		this.waitTime = waitTime;
+		this.traceChange = traceChange;
+		this.aggressiveClean = aggressiveClean;
 	}
 
 	/**
@@ -31,7 +45,7 @@ public class MemoryProfiler {
 	 */
 	public void start() {
 		if (worker == null) {
-			worker = new MemoryProfilerWorker(waitTime);
+			worker = new MemoryProfilerWorker(waitTime, traceChange, aggressiveClean);
 		}
 		Thread thread = new Thread(worker);
 		thread.start();
@@ -88,4 +102,21 @@ public class MemoryProfiler {
 		}
 		return worker.getTimes();
 	}
+
+	public boolean isTraceChange() {
+		return traceChange;
+	}
+
+	public void setTraceChange(boolean traceChange) {
+		this.traceChange = traceChange;
+	}
+
+	public boolean isAggressiveClean() {
+		return aggressiveClean;
+	}
+
+	public void setAggressiveClean(boolean aggressiveClean) {
+		this.aggressiveClean = aggressiveClean;
+	}
+
 }

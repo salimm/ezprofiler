@@ -35,13 +35,28 @@ public class MemoryProfilerWorker implements Runnable {
 	/**
 	 * What memory usage was at start
 	 */
-	private long memoryUsageAtStart;
+	private final long memoryUsageAtStart;
 
-	public MemoryProfilerWorker(long waitTime) {
+	/**
+	 * indicates if the profiler should try to force clean before every sample
+	 */
+	private final boolean aggressiveClean;
+
+	/**
+	 * indicates if the memory usage should traces from the initial memory usage
+	 */
+	private boolean traceChange;
+
+	public MemoryProfilerWorker(long waitTime, boolean traceChange, boolean aggressiveClean) {
 		this.waitTime = waitTime;
+		this.setTraceChange(traceChange);
+		this.aggressiveClean = aggressiveClean;
 		values = new ArrayList<Long>();
 		times = new ArrayList<Long>();
-		this.memoryUsageAtStart = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		if (traceChange)
+			this.memoryUsageAtStart = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		else
+			this.memoryUsageAtStart = 0;
 	}
 
 	public void run() {
@@ -55,6 +70,8 @@ public class MemoryProfilerWorker implements Runnable {
 			if (isStopped()) {
 				return;
 			}
+			if (aggressiveClean)
+				System.gc();
 			// add current time
 			getTimes().add(System.currentTimeMillis());
 			// get running memory
@@ -79,5 +96,17 @@ public class MemoryProfilerWorker implements Runnable {
 
 	public List<Long> getTimes() {
 		return times;
+	}
+
+	public boolean isAggressiveCleanClean() {
+		return aggressiveClean;
+	}
+
+	public boolean isTraceChange() {
+		return traceChange;
+	}
+
+	public void setTraceChange(boolean traceChange) {
+		this.traceChange = traceChange;
 	}
 }
