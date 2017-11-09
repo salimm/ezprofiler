@@ -55,8 +55,8 @@ public class BasicsMemoryProfilerTest {
 		mem.stop();
 
 		Assert.assertEquals(2, mem.getMemoryUsages().size());
-		Assert.assertEquals(mem1, mem.getMemoryUsages().get(0).longValue());
-		Assert.assertEquals(mem2, mem.getMemoryUsages().get(1).longValue());
+		Assert.assertEquals(mem1/100, mem.getMemoryUsages().get(0).longValue()/100);
+		Assert.assertEquals(mem2/100, mem.getMemoryUsages().get(1).longValue()/100);
 
 	}
 
@@ -97,8 +97,8 @@ public class BasicsMemoryProfilerTest {
 		mem.stop();
 
 		Assert.assertEquals(2, mem.getMemoryUsages().size());
-		Assert.assertEquals(mem1, mem.getMemoryUsages().get(0).longValue());
-		Assert.assertEquals(mem2, mem.getMemoryUsages().get(1).longValue());
+		Assert.assertEquals(mem1/100, mem.getMemoryUsages().get(0).longValue()/100);
+		Assert.assertEquals(mem2/1000, mem.getMemoryUsages().get(1).longValue()/1000);
 
 	}
 
