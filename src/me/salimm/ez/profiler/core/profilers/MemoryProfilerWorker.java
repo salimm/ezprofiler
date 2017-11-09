@@ -32,10 +32,16 @@ public class MemoryProfilerWorker implements Runnable {
 	 */
 	private long waitTime;
 
+	/**
+	 * What memory usage was at start
+	 */
+	private long memoryUsageAtStart;
+
 	public MemoryProfilerWorker(long waitTime) {
 		this.waitTime = waitTime;
 		values = new ArrayList<Long>();
 		times = new ArrayList<Long>();
+		this.memoryUsageAtStart = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 	}
 
 	public void run() {
@@ -53,7 +59,7 @@ public class MemoryProfilerWorker implements Runnable {
 			getTimes().add(System.currentTimeMillis());
 			// get running memory
 			Runtime runtime = Runtime.getRuntime();
-			long usedMemory = runtime.totalMemory() - runtime.freeMemory();
+			long usedMemory = (runtime.totalMemory() - runtime.freeMemory()) - memoryUsageAtStart;
 			// add current used memory
 			getValues().add(usedMemory);
 		}

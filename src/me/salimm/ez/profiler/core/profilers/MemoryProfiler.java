@@ -20,6 +20,7 @@ public class MemoryProfiler {
 	 * wait time between samples
 	 */
 	private long waitTime;
+	
 
 	public MemoryProfiler(long waitTime) {
 		this.waitTime = waitTime;
