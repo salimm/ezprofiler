@@ -87,7 +87,7 @@ public class MemoryProfiler {
 	 * @return
 	 * @throws ProfilerNotStartedException
 	 */
-	public List<Long> getMemoryUsages() throws ProfilerNotStartedException {
+	public  List<Long> getMemoryUsages() throws ProfilerNotStartedException {
 		if (worker == null) {
 			throw new ProfilerNotStartedException();
 		}

@@ -78,14 +78,18 @@ public class MemoryProfilerWorker implements Runnable {
 	private void sample() {
 		if (aggressiveClean)
 			System.gc();
-		// add current time
-		getTimes().add(System.currentTimeMillis());
-		// get running memory
-		Runtime runtime = Runtime.getRuntime();
-		long usedMemory = (runtime.totalMemory() - runtime.freeMemory()) - memoryUsageAtStart;
-		// add current used memory
-		getValues().add(usedMemory);
-		// thread wait for the time
+		synchronized (values) {
+			synchronized (times) {
+				// add current time
+				getTimes().add(System.currentTimeMillis());
+				// get running memory
+				Runtime runtime = Runtime.getRuntime();
+				long usedMemory = (runtime.totalMemory() - runtime.freeMemory()) - memoryUsageAtStart;
+				// add current used memory
+				getValues().add(usedMemory);
+				// thread wait for the time
+			}
+		}
 	}
 
 	public boolean isStopped() {
@@ -93,15 +97,19 @@ public class MemoryProfilerWorker implements Runnable {
 	}
 
 	public void stop() {
-		this.isStopped = false;
+		this.isStopped = true;
 	}
 
-	public List<Long> getValues() {
-		return values;
+	public synchronized List<Long> getValues() {
+		synchronized (values) {
+			return values;
+		}
 	}
 
-	public List<Long> getTimes() {
-		return times;
+	public synchronized List<Long> getTimes() {
+		synchronized (times) {
+			return times;
+		}
 	}
 
 	public boolean isAggressiveCleanClean() {
