@@ -1,7 +1,7 @@
 # ezprofiler
 Easy Profiler is an easy java memory profiler to use in your code to trace memory usage of different parts of your program
 
-![build status](https://travis-ci.org/salimm/ezprofiler.svg?branch=master)
+[![Build Status](https://travis-ci.org/salimm/ezprofiler.svg?branch=master)](https://travis-ci.org/salimm/ezprofiler)
 
 ezprofiler currently contains:
 
