@@ -2,6 +2,10 @@ package me.salimm.ez.profiler.core.profilers;
 
 import java.util.List;
 
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.math3.stat.descriptive.moment.Mean;
+import org.apache.commons.math3.stat.descriptive.moment.Variance;
+import org.apache.commons.math3.stat.descriptive.rank.Median;
 
 import me.salimm.ez.profiler.core.errors.ProfilerNotStartedException;
 
@@ -117,6 +121,57 @@ public class MemoryProfiler {
 
 	public void setAggressiveClean(boolean aggressiveClean) {
 		this.aggressiveClean = aggressiveClean;
+	}
+
+	public long maxMemoryUsage() throws ProfilerNotStartedException {
+		return NumberUtils.max(values());
+	}
+
+	public long minMemoryUsage() throws ProfilerNotStartedException {
+		return NumberUtils.min(values());
+	}
+	
+	public double avgMemoryUsage() throws ProfilerNotStartedException {
+		Mean mean = new Mean();
+		return mean.evaluate(doubleValues());
+	}
+	
+	public double medianMemoryUsage() throws ProfilerNotStartedException {
+		Median median = new Median();
+		return median.evaluate(doubleValues());
+	}
+	
+	public double varianceMemoryUsage() throws ProfilerNotStartedException {
+		Variance var = new Variance();
+		return var.evaluate(doubleValues());
+	}
+	
+	
+	public long latest() throws ProfilerNotStartedException {
+		int idx = getMemoryUsages().size();
+		return getMemoryUsages().get(idx - 1);
+	}
+
+	/**
+	 * used to get primitive array for arithmatics
+	 * 
+	 * @return
+	 * @throws ProfilerNotStartedException
+	 */
+	private long[] values() throws ProfilerNotStartedException {
+		long[] values = new long[getMemoryUsages().size()];
+		for (int i = 0; i < values.length; i++) {
+			values[i] = getMemoryUsages().get(i);
+		}
+		return values;
+	}
+	
+	private double[] doubleValues() throws ProfilerNotStartedException {
+		double[] values = new double[getMemoryUsages().size()];
+		for (int i = 0; i < values.length; i++) {
+			values[i] = getMemoryUsages().get(i);
+		}
+		return values;
 	}
 
 }
