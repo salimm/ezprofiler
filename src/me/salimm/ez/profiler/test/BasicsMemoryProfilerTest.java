@@ -1,6 +1,5 @@
 package me.salimm.ez.profiler.test;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.CloseAction;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,6 +24,7 @@ public class BasicsMemoryProfilerTest {
 
 	}
 
+	@SuppressWarnings("unused")
 	@Test
 	public void testMemoryTest() throws ProfilerNotStartedException, InterruptedException {
 		MemoryProfiler mem = new MemoryProfiler(100, false, false);
